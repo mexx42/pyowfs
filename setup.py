@@ -35,7 +35,7 @@ from distutils.core import setup
 setup \
     ( name         = 'pyowfs'
     , version      = '0.1'
-    , description  = 'Python OWFS Utilities'
+    , description  = "OWFS' libowcapi wrapper"
     , author       = 'Marcus Priesch'
     , author_email = 'marcus@priesch.co.at'
     , url          = 'http://www.priesch.co.at/pyowfs'
