@@ -201,7 +201,7 @@ class Connection (Sensor) :
 
     find sensors of a specific type :
 
-    >>> s = root.find (type="DS2406")
+    >>> s = root.find (type="DS2406") [0]
 
     dump all entries of the sensor :
 

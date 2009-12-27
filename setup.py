@@ -33,19 +33,26 @@
 from distutils.core import setup
 
 setup \
-    ( name         = 'pyowfs'
-    , version      = '0.1'
-    , description  = "OWFS' libowcapi wrapper using ctypes"
-    , author       = 'Marcus Priesch'
-    , author_email = 'marcus@priesch.co.at'
-    , url          = 'http://www.priesch.co.at/pyowfs'
-    , packages     = ['pyowfs']
-    , requires     = ["ctypes(>1.0.2)"]
-    , classifiers  = \
+    ( name             = 'pyowfs'
+    , version          = '0.1'
+    , description      = "OWFS' libowcapi wrapper using ctypes"
+    , long_description = "This package provides one module with a thin "
+      "wrapper around libowcapi and a slightly smarter wrapper around it "
+      "for easy access to the 1wire devices. It is inspired by the "
+      "OWFS provided python bindings but, however is neither api compatible "
+      "nor will it try to be in the future - at least i hope so ;)"
+    , author           = 'Marcus Priesch'
+    , author_email     = 'marcus@priesch.co.at'
+    , url              = 'http://www.priesch.co.at/pyowfs'
+    , packages         = ['pyowfs']
+    , requires         = ["ctypes(>1.0.2)"]
+    , license          = "LGPL"
+    , platforms        = ["POSIX"]
+    , classifiers      = \
           [ 'Development Status :: 4 - Beta'
           , 'Environment :: Console'
           , 'Intended Audience :: Developers'
-          , 'License :: OSI Approved :: Python Software Foundation License'
+          , 'License :: LGPL'
           , 'Operating System :: Microsoft :: Windows'
           , 'Operating System :: POSIX'
           , 'Programming Language :: Python'
