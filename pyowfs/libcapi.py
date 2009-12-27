@@ -26,7 +26,7 @@
 #    Wrapper for OWFS' libcapi
 #
 # Revision Dates
-#    22-Dec-2009 (MP) Creation
+#    22-Dec-2009 (MPH) Creation
 #    ««revision-date»»···
 #--
 import ctypes
@@ -67,7 +67,6 @@ class CAPI (object) :
     # end def reinit
 
     def get (self, path) :
-        print "capi.get %r" % path
         buf_p   = ctypes.POINTER (ctypes.c_char) ()
         buf_len = ctypes.c_long ()
         res = self.libcapi.OW_get \
@@ -82,7 +81,7 @@ class CAPI (object) :
 
     def put (self, path, what) :
         res = self.libcapi.OW_put (path, what, len (what))
-        if res == 0 :
+        if res >= 0 :
             return True
         else :
             return False

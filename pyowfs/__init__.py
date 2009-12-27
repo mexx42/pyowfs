@@ -20,39 +20,18 @@
 #
 #++
 # Name
-#    setup
+#    __init__
 #
 # Purpose
-#    distutils setup
+#    module init for pyowfs
 #
 # Revision Dates
-#    22-Dec-2009 (MP) Creation
+#    27-Dec-2009 (MPH) Creation
 #    ««revision-date»»···
 #--
 
-from distutils.core import setup
+from owfs import Connection
 
-setup \
-    ( name         = 'pyowfs'
-    , version      = '0.1'
-    , description  = "OWFS' libowcapi wrapper using ctypes"
-    , author       = 'Marcus Priesch'
-    , author_email = 'marcus@priesch.co.at'
-    , url          = 'http://www.priesch.co.at/pyowfs'
-    , packages     = ['pyowfs']
-    , requires     = ["ctypes(>1.0.2)"]
-    , classifiers  = \
-          [ 'Development Status :: 4 - Beta'
-          , 'Environment :: Console'
-          , 'Intended Audience :: Developers'
-          , 'License :: OSI Approved :: Python Software Foundation License'
-          , 'Operating System :: Microsoft :: Windows'
-          , 'Operating System :: POSIX'
-          , 'Programming Language :: Python'
-          , 'Topic :: Software Development'
-          ]
-    )
-
-### __END__ setup
+### __END__ __init__
 
 
