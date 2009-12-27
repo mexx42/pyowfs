@@ -43,7 +43,7 @@ setup \
       "nor will it try to be in the future - at least i hope so ;)"
     , author           = 'Marcus Priesch'
     , author_email     = 'marcus@priesch.co.at'
-    , url              = 'http://www.priesch.co.at/pyowfs'
+    , url              = 'http://priesch.co.at/pyowfs'
     , packages         = ['pyowfs']
     , requires         = ["ctypes(>1.0.2)"]
     , license          = "LGPL"
