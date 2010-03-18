@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2009 Marcus Priesch, All rights reserved
+# Copyright (C) 2009-2010 Marcus Priesch, All rights reserved
 # In Prandnern 31, A--2122 Riedenthal, Austria. office@priesch.co.at
 # ****************************************************************************
 #
@@ -27,6 +27,8 @@
 #
 # Revision Dates
 #    22-Dec-2009 (MPH) Creation
+#    18-Mar-2010 (MPH) Changed to use ctypes.cdll.LoadLibrary instead of
+#                      ctypes.CDLL to honor LD_LIBRARY_PATH
 #    ««revision-date»»···
 #--
 import ctypes
@@ -39,7 +41,7 @@ class AlreadyInitialisedError (StandardError) :
 class CAPI (object) :
     def __init__ (self) :
         if sys.platform == "linux2" :
-            self.libcapi = ctypes.CDLL ("libowcapi.so")
+            self.libcapi = ctypes.cdll.LoadLibrary ("libowcapi.so")
             self.libc    = ctypes.CDLL ("libc.so.6")
         else :
             raise NotImplementedError ("No support for %r" % sys.platform)

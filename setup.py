@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2009 Marcus Priesch, All rights reserved
+# Copyright (C) 2009-2010 Marcus Priesch, All rights reserved
 # In Prandnern 31, A--2122 Riedenthal, Austria. office@priesch.co.at
 # ****************************************************************************
 #
@@ -26,7 +26,8 @@
 #    distutils setup
 #
 # Revision Dates
-#    22-Dec-2009 (MP) Creation
+#    22-Dec-2009 (MPH) Creation
+#    18-Mar-2010 (MPH) Version bump to 0.1.1
 #    ««revision-date»»···
 #--
 
@@ -34,7 +35,7 @@ from distutils.core import setup
 
 setup \
     ( name             = 'pyowfs'
-    , version          = '0.1'
+    , version          = '0.1.1'
     , description      = "OWFS' libowcapi wrapper using ctypes"
     , long_description = "This package provides one module with a thin "
       "wrapper around libowcapi and a slightly smarter wrapper around it "
