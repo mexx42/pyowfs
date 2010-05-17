@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2009 Marcus Priesch, All rights reserved
+# Copyright (C) 2009-2010 Marcus Priesch, All rights reserved
 # In Prandnern 31, A--2122 Riedenthal, Austria. office@priesch.co.at
 # ****************************************************************************
 #
@@ -27,6 +27,7 @@
 #
 # Revision Dates
 #    22-Dec-2009 (MPH) Creation
+#    17-May-2010 (MPH) Fixed 'iter_*' on empty items
 #    ««revision-date»»···
 #--
 import libcapi
@@ -67,12 +68,14 @@ class Dir (object) :
     def iter_entries (self) :
         """Iterates over all entries under this directory node.
         """
-        for e in self.capi.get (self.path).split (",") :
-            if not sensor_rex.match (e) :
-                if e.endswith ("/") :
-                    yield Dir (self.path + e, self.capi)
-                else :
-                    yield e
+        entries = self.capi.get (self.path)
+        if entries :
+            for e in entries.split (",") :
+                if not sensor_rex.match (e) :
+                    if e.endswith ("/") :
+                        yield Dir (self.path + e, self.capi)
+                    else :
+                        yield e
     # end def iter_entries
 
     def get (self, key) :
@@ -130,9 +133,11 @@ class Sensor (Dir) :
         'sensors' are identified by the special representation in the owfs
         hierarchy: '[0-9A-F]{2}.[0-9A-F]{12}/' (e.g. 12.E8F672000000)
         """
-        for e in self.capi.get (self.path).split (",") :
-            if sensor_rex.match (e) :
-                yield Sensor ("%s%s" % (self.path, e), self.capi)
+        sensors = self.capi.get (self.path)
+        if sensors :
+            for e in sensors.split (",") :
+                if sensor_rex.match (e) :
+                    yield Sensor ("%s%s" % (self.path, e), self.capi)
     # end def iter_sensors
 
     def find (self, **kw) :
