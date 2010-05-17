@@ -53,7 +53,7 @@ setup \
           [ 'Development Status :: 4 - Beta'
           , 'Environment :: Console'
           , 'Intended Audience :: Developers'
-          , 'License :: LGPL'
+          , 'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)'
           , 'Operating System :: Microsoft :: Windows'
           , 'Operating System :: POSIX'
           , 'Programming Language :: Python'
