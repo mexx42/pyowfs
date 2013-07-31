@@ -35,7 +35,7 @@ from distutils.core import setup
 
 setup \
     ( name             = 'pyowfs'
-    , version          = '0.1.3'
+    , version          = '0.1.6'
     , description      = "OWFS' libowcapi wrapper using ctypes"
     , long_description = "This package provides one module with a thin "
       "wrapper around libowcapi and a slightly smarter wrapper around it "

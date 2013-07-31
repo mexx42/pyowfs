@@ -29,10 +29,16 @@
 #    22-Dec-2009 (MPH) Creation
 #    18-Mar-2010 (MPH) Changed to use ctypes.cdll.LoadLibrary instead of
 #                      ctypes.CDLL to honor LD_LIBRARY_PATH
+#    31-Jul-2013 (MPR) Added caching to 1wire communication, to improve
+#                      searching on large trees
 #    ««revision-date»»···
 #--
 import ctypes
 import sys
+import time
+
+CACHE_MAX_AGE = 30 # seconds
+CACHE         = dict ()
 
 class AlreadyInitialisedError (StandardError) :
     pass
@@ -55,6 +61,7 @@ class CAPI (object) :
             raise AlreadyInitialisedError
 
         self.ow = self.libcapi.OW_init (params)
+        CACHE = dict ()
     # end def init
 
     def finish (self) :
@@ -68,7 +75,14 @@ class CAPI (object) :
         self.init (self.init_params)
     # end def reinit
 
-    def get (self, path) :
+    def get (self, path, cached = True) :
+        if cached and path in CACHE :
+            res, ts = CACHE [path]
+            if (time.time () - ts) > CACHE_MAX_AGE :
+                CACHE.pop (path)
+            else :
+                return res
+
         buf_p   = ctypes.POINTER (ctypes.c_char) ()
         buf_len = ctypes.c_long ()
         res = self.libcapi.OW_get \
@@ -78,10 +92,17 @@ class CAPI (object) :
             self.libc.free (buf_p)
         else :
             res = None
+
+        if cached :
+            CACHE [path] = (res, time.time ())
+
         return res
     # end def get
 
     def put (self, path, what) :
+        if path in CACHE :
+            CACHE.pop (path)
+
         res = self.libcapi.OW_put (path, what, len (what))
         if res >= 0 :
             return True

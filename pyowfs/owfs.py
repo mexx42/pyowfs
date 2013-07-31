@@ -28,6 +28,10 @@
 # Revision Dates
 #    22-Dec-2009 (MPH) Creation
 #    17-May-2010 (MPH) Fixed 'iter_*' on empty items
+#     3-Aug-2010 (MPR) Fixed '__repr__' of 'Connection'
+#     2-Nov-2010 (MPR) Added 'finish' to 'Connection'
+#    31-Jul-2013 (MPR) Added caching to 1wire communication, to improve
+#                      searching on large trees
 #    ««revision-date»»···
 #--
 import libcapi
@@ -78,7 +82,7 @@ class Dir (object) :
                         yield e
     # end def iter_entries
 
-    def get (self, key) :
+    def get (self, key, cached = True) :
         """Get a given entry.
 
         Basically this resembles a read access to self.path/key.
@@ -91,7 +95,8 @@ class Dir (object) :
             else :
                 basename = e.split ("/") [-1]
                 if key == basename :
-                    return self.capi.get ("%s%s" % (self.path, e))
+                    return self.capi.get \
+                        ("%s%s" % (self.path, e), cached = cached)
         raise KeyError (key)
     # end def get
 
@@ -117,12 +122,6 @@ class Sensor (Dir) :
     iterate over it's child sensors (e.g. DS2409) and 'find' to find other
     sensors by matching keyword arguments.
     """
-    def __init__ (self, path, capi) :
-        self._path   = path
-        self.capi = capi
-        self.cached  = True
-    # end def __init__
-
     def __repr__ (self) :
         return "<Sensor %s - %s>" % (self.path, self.get ("type"))
     # end def __repr__
@@ -287,6 +286,17 @@ class Connection (Sensor) :
         capi.init (port)
         super (Connection, self).__init__ ("/", capi)
     # end def __init__
+
+    def __repr__ (self) :
+        return "<Connection %s>" % (self.path)
+    # end def __repr__
+
+    def finish (self) :
+        """close connection
+        """
+        self.capi.finish ()
+    # end def finish
+
 # end class Connection
 
 ### __END__ owfs
