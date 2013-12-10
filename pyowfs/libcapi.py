@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2009-2010 Marcus Priesch, All rights reserved
+# Copyright (C) 2009-2013 Marcus Priesch, All rights reserved
 # In Prandnern 31, A--2122 Riedenthal, Austria. office@priesch.co.at
 # ****************************************************************************
 #
@@ -31,6 +31,7 @@
 #                      ctypes.CDLL to honor LD_LIBRARY_PATH
 #    31-Jul-2013 (MPR) Added caching to 1wire communication, to improve
 #                      searching on large trees
+#    10-Dec-2013 (MPR) Fixed CACHE for multiple instances
 #    ««revision-date»»···
 #--
 import ctypes
@@ -38,7 +39,6 @@ import sys
 import time
 
 CACHE_MAX_AGE = 30 # seconds
-CACHE         = dict ()
 
 class AlreadyInitialisedError (StandardError) :
     pass
@@ -61,7 +61,7 @@ class CAPI (object) :
             raise AlreadyInitialisedError
 
         self.ow = self.libcapi.OW_init (params)
-        CACHE = dict ()
+        self.CACHE = dict ()
     # end def init
 
     def finish (self) :
@@ -76,10 +76,10 @@ class CAPI (object) :
     # end def reinit
 
     def get (self, path, cached = True) :
-        if cached and path in CACHE :
-            res, ts = CACHE [path]
+        if cached and path in self.CACHE :
+            res, ts = self.CACHE [path]
             if (time.time () - ts) > CACHE_MAX_AGE :
-                CACHE.pop (path)
+                self.CACHE.pop (path)
             else :
                 return res
 
@@ -94,13 +94,13 @@ class CAPI (object) :
             res = None
 
         if cached :
-            CACHE [path] = (res, time.time ())
+            self.CACHE [path] = (res, time.time ())
 
         return res
     # end def get
 
     def put (self, path, what) :
-        if path in CACHE :
+        if path in self.CACHE :
             CACHE.pop (path)
 
         res = self.libcapi.OW_put (path, what, len (what))
