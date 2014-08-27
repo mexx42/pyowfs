@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2009-2013 Marcus Priesch, All rights reserved
+# Copyright (C) 2009-2014 Marcus Priesch, All rights reserved
 # In Prandnern 31, A--2122 Riedenthal, Austria. office@priesch.co.at
 # ****************************************************************************
 #
@@ -101,7 +101,7 @@ class CAPI (object) :
 
     def put (self, path, what) :
         if path in self.CACHE :
-            CACHE.pop (path)
+            self.CACHE.pop (path)
 
         res = self.libcapi.OW_put (path, what, len (what))
         if res >= 0 :
